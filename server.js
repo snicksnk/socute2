@@ -10,9 +10,27 @@ var compiler = webpack(config)
 app.use(webpackDevMiddleware(compiler, { noInfo: true, publicPath: config.output.publicPath }))
 app.use(webpackHotMiddleware(compiler))
 
+
 app.get("/", function(req, res) {
   res.sendFile(__dirname + '/index.html')
 });
+
+
+app.get("/stylesheets/stylesheet.css", function(req, res) {
+  res.sendFile(__dirname + '/stylesheets/stylesheet.css')
+});
+
+
+app.get("/stylesheets/github-light.css", function(req, res) {
+  res.sendFile(__dirname + '/stylesheets/github-light.css')
+});
+
+
+app.get("/stylesheets/print.css", function(req, res) {
+  res.sendFile(__dirname + '/stylesheets/print.css ')
+});
+
+
 
 
 
