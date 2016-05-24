@@ -13,25 +13,34 @@ $().ready(() => {
 	});
 
 
-	$('.node').mousedown(e => {
-		console.log('down');
+	var bindSelect = elm => $(elm).mousedown(e => {
+		console.log(elm);
 		var id = e.target.id;
 		state = State.setSelectedNode(state, id);
 	});
 
-	$('.node').mouseup(e => {
+	bindSelect('.node');
+
+	var bindUnselect = elm => $(elm).mouseup(e => {
 		var id = e.target.id;
 		state = State.unselectNode(state);
 	});
 
+	bindUnselect('.node');
+
+	var frameN = 0;
+	setInterval( () => {
+		console.log(frameN / 2);
+		frameN = 0;
+	}, 1000);
+
 	var fps = (lastTime) => {
 		var startTime = new Date().getTime();
-		var frameN = 0;
+		
 
-		setInterval(console.log('frame rate', frameN), 1000);
 
 		return new Promise(resolve => {
-			var minFrameTime = 10;
+			var minFrameTime = 30;
 
 			var currentTime = new Date().getTime();
 			var timeFromLastFrame = currentTime - lastTime;
@@ -40,11 +49,10 @@ $().ready(() => {
 			var delayTime = minFrameTime - timeFromLastFrame;
 
 			if (delayTime < 0){
-				delayTime = 1;
+				delayTime = 0;
 			}
 
 			frameN++; 
-			console.log(frameN);
 
 
 			setTimeout(() => {resolve(currentTime);}, delayTime);
@@ -53,6 +61,16 @@ $().ready(() => {
 
 	co(function * () {
 	  	var lastValue = 0;
+
+	  	var canv = $("#canvas")[0];
+	  	var node = Node.create('assasa');
+	  	
+	  	//var state = Node.bindSelect(state, node);
+	  	
+	  	canv.appendChild(node);
+	  	bindSelect(node);
+	  	bindUnselect(node);
+
 		while (lastValue = yield fps(lastValue)){
 			state = State.calculateMouseDiff(state);
 			state = Node.moveSelected(state);
