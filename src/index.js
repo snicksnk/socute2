@@ -2,6 +2,7 @@ var co = require('co');
 var $ = require('jquery');
 
 var Node = require('./node.js');
+var Text = require('./text');
 var State = require('./state.js');
 
 
@@ -29,8 +30,10 @@ $().ready(() => {
 	bindUnselect('.node');
 
 	var frameN = 0;
+
+	var fpsDisp = $('#fps');
 	setInterval( () => {
-		console.log(frameN / 2);
+		fpsDisp.html('fps ' + (frameN / 2));
 		frameN = 0;
 	}, 1000);
 
@@ -60,14 +63,22 @@ $().ready(() => {
 	;
 
 	co(function * () {
+
 	  	var lastValue = 0;
 
 	  	var canv = $("#canvas")[0];
-	  	var node = Node.create('assasa');
+	  	var node = Node.create(100);
+	  	var text = Text.create('sasa', 200);
+
 	  	
 	  	//var state = Node.bindSelect(state, node);
-	  	
+	  	console.log('---')
 	  	canv.appendChild(node);
+	  	canv.appendChild(text);
+	  	Text.assignToNode(node, text);
+
+	  	console.log(text);
+
 	  	bindSelect(node);
 	  	bindUnselect(node);
 

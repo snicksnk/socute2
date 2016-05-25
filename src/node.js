@@ -2,7 +2,7 @@ var $ = require('jquery');
 var Line = require('./line');
 
 var Node = {
-    create(svgCanvas, text){
+    create(id){
         var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         var svgNS = svg.namespaceURI;
         var rect = document.createElementNS(svgNS,'rect');
@@ -14,11 +14,10 @@ var Node = {
         rect.setAttribute('y',0);   
         rect.setAttribute('rx',15);
         rect.setAttribute('ry',15);
-        rect.setAttribute('id', 'node-100');
-
-        
+        rect.setAttribute('id', 'node-' + id);
         return rect;        
     },
+
     moveSelected(state){
         var mousePos = state.mouse;
         var mouseDiff = state.diff; 
