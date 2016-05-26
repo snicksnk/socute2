@@ -4,6 +4,7 @@ var $ = require('jquery');
 var Node = require('./node.js');
 var Text = require('./text');
 var State = require('./state.js');
+var Line = require('./line.js')
 
 
 $().ready(() => {
@@ -76,9 +77,17 @@ $().ready(() => {
 	  	canv.appendChild(text);
 	  	node = Node.stretchToText(node, text);
 	  	text =Text.assignToNode(node, text);
+
+
 	  	
 	  	bindSelect(node);
 	  	bindUnselect(node);
+
+	  	var node1 = $('#node-1')[0];	
+	  	var line = Line.create(node1, node);
+
+	  	canv.appendChild(line);
+
 
 		while (lastValue = yield fps(lastValue)){
 			state = State.calculateMouseDiff(state);

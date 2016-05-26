@@ -16,12 +16,25 @@ var Selector = {
 
 	},
 
-	attr(element, attrName, value){
+	attr(element, attrName){
+		console.log(element);
 		return parseInt(element.getAttribute(attrName));
+	},
+
+	strAttr(element, attrName){
+		return element.getAttribute(attrName) || '';
 	},
 
 	setAttr(element, attrName, value){
 		element.setAttribute(attrName, value);
+		return element;
+	},
+
+	appendAttr(element, attrName, value){
+		console.log(arguments);
+		var fullClassAttr = Selector.strAttr(element, attrName);
+		fullClassAttr += ' ' + value;
+		element = Selector.setAttr(element, attrName, fullClassAttr);
 		return element;
 	}
 

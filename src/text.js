@@ -41,6 +41,12 @@ var Text = {
         text.setAttribute('y', parentY +  (parentH / 2) + (textH / 4));
 
         return text;
+    },
+
+    setParent(parentNode, childrenNode){
+        var parentId = Selector.getId(parentNode);
+        var childrenClass = 'depends-node-' + parentId;
+
     }
 };
 
