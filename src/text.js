@@ -1,4 +1,5 @@
 var Selector = require('./selector');
+var attr = Selector.attr;
 
 var Text = {
     create(id, value){
@@ -28,16 +29,16 @@ var Text = {
     locateToNode(parentNode, text){
     	var leftOffset = 10
         bottomOffset = 10,
-        parentX = parentNode.getAttribute('x'),
-        parentY = parentNode.getAttribute('y'),
-        parentH = parentNode.getAttribute('height'),
-        parentW = parentNode.getAttribute('width'),
-        textBox = text.getBBox();
-
-        console.log(textBox);
+        parentX = attr(parentNode, 'x'),
+        parentY = attr(parentNode, 'y'),
+        parentH = attr(parentNode, 'height'),
+        parentW = attr(parentNode, 'width'),
+        textBox = text.getBBox(),
+        textH = parseInt(textBox.height),
+        textW = parseInt(textBox.width);
 
         text.setAttribute('x', parentX + leftOffset);
-        text.setAttribute('y', parentY + parentH - bottomOffset);
+        text.setAttribute('y', parentY +  (parentH / 2) + (textH / 4));
 
         return text;
     }

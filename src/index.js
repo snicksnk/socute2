@@ -15,7 +15,6 @@ $().ready(() => {
 
 
 	var bindSelect = elm => $(elm).mousedown(e => {
-		console.log(elm);
 		var id = e.target.id;
 		state = State.setSelectedNode(state, id);
 	});
@@ -72,13 +71,12 @@ $().ready(() => {
 
 	  	
 	  	//var state = Node.bindSelect(state, node);
-	  	console.log('---')
+
 	  	canv.appendChild(node);
 	  	canv.appendChild(text);
-	  	Text.assignToNode(node, text);
-
-	  	console.log(text);
-
+	  	node = Node.stretchToText(node, text);
+	  	text =Text.assignToNode(node, text);
+	  	
 	  	bindSelect(node);
 	  	bindUnselect(node);
 

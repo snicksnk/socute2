@@ -1,5 +1,9 @@
 var $ = require('jquery');
 var Line = require('./line');
+var Selector = require('./selector');
+var attr = Selector.attr;
+var setAttr = Selector.setAttr;
+
 
 var Node = {
     create(id){
@@ -50,14 +54,22 @@ var Node = {
         });
     },
 
-    bindSelect(state, node){
-        $(node).mousedown(e => {
-            console.log('click');
-            var id = e.target.id;
-            state = State.setSelectedNode(state, id);
-        });
-        console.log(state)
-        return state;
+    stretchToText(node, text){
+        var leftOffset = 10
+        bottomOffset = 10,
+        textBox = text.getBBox(),
+        textH = parseInt(textBox.height),
+        textW = parseInt(textBox.width);
+
+        
+        var nodeWidth = leftOffset * 2 + textW;
+        var nodeHeight = bottomOffset * 2 + textH;
+
+        console.log(nodeWidth, nodeHeight, textW)
+        setAttr(node, 'width', nodeWidth);
+        setAttr(node, 'height', nodeHeight);
+
+        return node;
     }
 }
 

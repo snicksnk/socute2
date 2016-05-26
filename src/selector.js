@@ -15,6 +15,17 @@ var Selector = {
 		}
 
 	},
+
+	attr(element, attrName, value){
+		return parseInt(element.getAttribute(attrName));
+	},
+
+	setAttr(element, attrName, value){
+		element.setAttribute(attrName, value);
+		return element;
+	}
+
+
 };
 
 module.exports = Selector;
