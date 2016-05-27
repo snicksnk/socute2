@@ -19,7 +19,7 @@ var Line = {
         var svgNS = svg.namespaceURI;
         var path = document.createElementNS(svgNS,'path');
       	
-  path = Selector.setAttr(path, 'd', 'M 0 0 L 100 100');
+  		path = Selector.setAttr(path, 'd', 'M 0 0 L 100 100');
         path = Selector.appendAttr(path, 'class', 'startat-' + parentId);
         path = Selector.appendAttr(path, 'class', 'endat-' + childrenId);
         path = Selector.setAttr(path, 'fill', "#9DE281");

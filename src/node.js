@@ -54,6 +54,14 @@ var Node = {
         });
     },
 
+    getLeftPoint(node){
+        var nodeX = attr(node, 'x'),
+            nodeY = attr(node, 'y'),
+            nodeH = attr(node, 'height');
+
+        return [nodeX, nodeY + (nodeH / 2)];
+    },
+
     stretchToText(node, text){
         var leftOffset = 10
         bottomOffset = 10,
