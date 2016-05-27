@@ -69,6 +69,7 @@ $().ready(() => {
 	  	var canv = $("#canvas")[0];
 	  	var node = Node.create(100);
 	  	var text = Text.create('sasa', 200);
+	  	var node1 = $('#node-1')[0];	
 
 	  	
 	  	//var state = Node.bindSelect(state, node);
@@ -76,6 +77,8 @@ $().ready(() => {
 	  	canv.appendChild(node);
 	  	canv.appendChild(text);
 	  	node = Node.stretchToText(node, text);
+
+	  	Node.setParent(node, node1);
 	  	text =Text.assignToNode(node, text);
 
 
@@ -83,10 +86,13 @@ $().ready(() => {
 	  	bindSelect(node);
 	  	bindUnselect(node);
 
-	  	var node1 = $('#node-1')[0];	
 	  	var line = Line.create(node1, node);
 
+
+
 	  	canv.appendChild(line);
+
+
 
 
 		while (lastValue = yield fps(lastValue)){

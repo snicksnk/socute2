@@ -1,5 +1,8 @@
 var $ = require('jquery');
 var Selector = require('./selector');
+var attr 	 = Selector.attr;
+
+        console.log( Node);
 
 var Line = {
 
@@ -18,8 +21,14 @@ var Line = {
 		var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
         var svgNS = svg.namespaceURI;
         var path = document.createElementNS(svgNS,'path');
+
+
+        var parentNodePoint = Line.getRightPoint(parentNode);
+        var childrenNodePoint = Line.getLeftPoint(childrenNode);
+
+
       	
-  		path = Selector.setAttr(path, 'd', 'M 0 0 L 100 100');
+  		path = Selector.setAttr(path, 'd', 'M ' + parentNodePoint.join(' ') + ' L ' + childrenNodePoint.join(' '));
         path = Selector.appendAttr(path, 'class', 'startat-' + parentId);
         path = Selector.appendAttr(path, 'class', 'endat-' + childrenId);
         path = Selector.setAttr(path, 'fill', "#9DE281");
@@ -36,6 +45,25 @@ var Line = {
 
       	return path;
 	},
+
+
+
+    getLeftPoint(node){
+        var nodeX = attr(node, 'x'),
+            nodeY = attr(node, 'y'),
+            nodeH = attr(node, 'height');
+
+        return [nodeX, nodeY + (nodeH / 2)];
+    },
+
+    getRightPoint(node){
+        var nodeX = attr(node, 'x'),
+            nodeY = attr(node, 'y'),
+            nodeH = attr(node, 'height'),
+            nodeW = attr(node, 'width');
+
+        return [nodeX + nodeW, nodeY + (nodeH / 2)];
+    },
 
 	parseD(dString){
 		var parse = /(M)\s([\-]?\d+)+\s([\-]?\d+)\s(L)\s([\-]?\d+)\s([\-]?\d+)/;

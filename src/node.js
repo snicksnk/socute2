@@ -3,6 +3,7 @@ var Line = require('./line');
 var Selector = require('./selector');
 var attr = Selector.attr;
 var setAttr = Selector.setAttr;
+var appendAttr = Selector.appendAttr;
 
 
 var Node = {
@@ -54,13 +55,13 @@ var Node = {
         });
     },
 
-    getLeftPoint(node){
-        var nodeX = attr(node, 'x'),
-            nodeY = attr(node, 'y'),
-            nodeH = attr(node, 'height');
 
-        return [nodeX, nodeY + (nodeH / 2)];
+    setParent(childrenNode, parentNode){
+        var childrenClass = 'depends-' + Selector.getId(parentNode);
+        childrenNode = appendAttr(childrenNode, 'class', childrenClass);
+        return childrenNode;
     },
+
 
     stretchToText(node, text){
         var leftOffset = 10
@@ -82,5 +83,5 @@ var Node = {
 }
 
 
-
+console.log(Node);
 module.exports = Node;
