@@ -52,6 +52,7 @@ var Node = {
         $('.depends-' + parentNode).each((n, e) => {
             var dependId = $(e).attr('id');
             Node.moveByDiff(dependId, diff);
+            Node.moveDepended(dependId, diff);
         });
     },
 
