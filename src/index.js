@@ -1,6 +1,7 @@
 var co = require('co');
 var $ = require('jquery');
 
+var MM   = require('./mm.js');
 var Node = require('./node.js');
 var Text = require('./text');
 var State = require('./state.js');
@@ -66,33 +67,41 @@ $().ready(() => {
 
 	  	var lastValue = 0;
 
+	  	
+	  	console.log(state);
+
+	  	var idMaker = () => {
+	  		state = State.incrementId(state);
+	  		return State.getCurrentId(state);
+	  	};
+
+	  	var newId = State.getCurrentId(state);
+	  	var node1 = $('#node-1000')[0];	
 	  	var canv = $("#canvas")[0];
-	  	var node = Node.create(100);
-	  	var text = Text.create('sasa', 200);
-	  	var node1 = $('#node-1')[0];	
 
-	  	
-	  	//var state = Node.bindSelect(state, node);
+	  	var rootNode = MM.createNode(idMaker, 'Root', canvas);
+  		MM.setParentNode(node1, rootNode);
 
-	  	canv.appendChild(node);
-	  	canv.appendChild(text);
-	  	node = Node.stretchToText(node, text);
-
-	  	Node.setParent(node, node1);
-	  	text =Text.assignToNode(node, text);
+	  	var nodeTwo = MM.createNode(idMaker, 'Two', canvas);
+	  	  	MM.setParentNode(node1, nodeTwo)
 
 
-	  	
+	  	var node = MM.createNode(idMaker, 'childrend', canvas);
+	  	MM.setParentNode(node1, node)
+
+	  	//Node.manualMoveByDiff(node, [100, 100])
+
+
+
+	  	bindSelect(rootNode);
+	  	bindUnselect(rootNode);
+
 	  	bindSelect(node);
 	  	bindUnselect(node);
 
-	  	var line = Line.create(node1, node);
 
-
-
-	  	canv.appendChild(line);
-
-
+	  	bindSelect(nodeTwo);
+	  	bindUnselect(nodeTwo);
 
 
 		while (lastValue = yield fps(lastValue)){

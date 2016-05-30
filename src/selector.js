@@ -11,13 +11,13 @@ var Selector = {
 		if (id){
 			return id;
 		} else {
+			console.log(element);
 			throw Error('Cant get id of', element);
 		}
 
 	},
 
 	attr(element, attrName){
-		console.log(element);
 		return parseInt(element.getAttribute(attrName));
 	},
 
@@ -31,7 +31,6 @@ var Selector = {
 	},
 
 	appendAttr(element, attrName, value){
-		console.log(arguments);
 		var fullClassAttr = Selector.strAttr(element, attrName);
 		fullClassAttr += ' ' + value;
 		element = Selector.setAttr(element, attrName, fullClassAttr);

@@ -10,7 +10,8 @@ module.exports = {
 			mouse: [0,0],
 			diff: [0,0],
 			drag: false,
-			selected: null
+			selected: null,
+			lastId: 1
 		};
 	},
 
@@ -19,6 +20,14 @@ module.exports = {
 		return state;
 	},
 
+	incrementId(state){
+		state.lastId ++ ;
+		return state;
+	},
+
+	getCurrentId(state){
+		return state.lastId;
+	},
 
 	updateMousePrev(state){
 		state._prevMouse = state.mouse;

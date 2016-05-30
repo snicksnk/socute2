@@ -12,6 +12,8 @@ var Node = {
         var svgNS = svg.namespaceURI;
         var rect = document.createElementNS(svgNS,'rect');
 
+
+
         rect.setAttribute('class','node');
         rect.setAttribute('width',100);
         rect.setAttribute('height',50);
@@ -35,10 +37,11 @@ var Node = {
     },
 
     move(node, coords){
-        var id = '#' + node;
+        var id = '#' + Selector.getId(node);
         var element = $(id);
         element.attr('x', coords[0] - 20);
         element.attr('y', coords[1] - 20);
+        return node;
     },
 
     moveByDiff (node, diffs) {
@@ -58,6 +61,7 @@ var Node = {
 
 
     setParent(childrenNode, parentNode){
+        console.log(parentNode)
         var childrenClass = 'depends-' + Selector.getId(parentNode);
         childrenNode = appendAttr(childrenNode, 'class', childrenClass);
         return childrenNode;
