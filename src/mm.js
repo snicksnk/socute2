@@ -32,13 +32,9 @@ var MM = {
 	},
 
 	setParentNode(parentNode, node){
-		console.log(parentNode);
 		Node.setParent(node, parentNode);
 	  	var line = Line.create(parentNode, node);
 	  	canvas.appendChild(line);
-
-
-
 	  	return node; 
 	}
 

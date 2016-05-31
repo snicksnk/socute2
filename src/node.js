@@ -13,7 +13,6 @@ var Node = {
         var rect = document.createElementNS(svgNS,'rect');
 
 
-
         rect.setAttribute('class','node');
         rect.setAttribute('width',100);
         rect.setAttribute('height',50);
@@ -30,9 +29,11 @@ var Node = {
         var mouseDiff = state.diff; 
         var selectedNode = state.selected;
 
-        Node.moveByDiff(selectedNode, mouseDiff);
-        Node.moveDepended(selectedNode, mouseDiff);
-        Line.moveDepended(selectedNode, mouseDiff);
+        if (selectedNode){
+	        Node.moveByDiff(selectedNode, mouseDiff);
+	        Node.moveDepended(selectedNode, mouseDiff);	
+        }
+        //Line.moveDepended(selectedNode, mouseDiff);
         return state;
     },
 
@@ -45,15 +46,23 @@ var Node = {
     },
 
     moveByDiff (node, diffs) {
-        var id = '#' + node;
+        var id = '#' + Selector.getId(node);
         var element = $(id);
         element.attr('x', parseInt(element.attr('x')) + diffs[0]);
         element.attr('y', parseInt(element.attr('y')) + diffs[1]);
+        Line.moveLineStart(node, diffs);
+        Line.moveLineEnd(node, diffs);
+    },
+
+    manualMoveByDiff (node, diffs){
+    	Node.moveByDiff(Selector.getId(node), diffs);
+	    Node.moveDepended(Selector.getId(node), diffs);	
     },
 
     moveDepended(parentNode, diff) {
         $('.depends-' + parentNode).each((n, e) => {
-            var dependId = $(e).attr('id');
+            var dependId = Selector.getId(e);
+            //Line.moveParentLine(e, diff);
             Node.moveByDiff(dependId, diff);
             Node.moveDepended(dependId, diff);
         });

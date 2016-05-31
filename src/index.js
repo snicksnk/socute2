@@ -28,6 +28,11 @@ $().ready(() => {
 		state = State.unselectNode(state);
 	});
 
+	var bindElement  = (elm) => {
+		bindSelect(elm);
+		bindUnselect(elm);
+	};
+
 	bindUnselect('.node');
 
 	var frameN = 0;
@@ -83,25 +88,31 @@ $().ready(() => {
   		MM.setParentNode(node1, rootNode);
 
 	  	var nodeTwo = MM.createNode(idMaker, 'Two', canvas);
-	  	  	MM.setParentNode(node1, nodeTwo)
+	  	MM.setParentNode(node1, nodeTwo);
 
 
 	  	var node = MM.createNode(idMaker, 'childrend', canvas);
-	  	MM.setParentNode(node1, node)
+	  	MM.setParentNode(node1, node);
+
+	  	var nodeNew = MM.createNode(idMaker, 'subChildren', canvas);
+	  	MM.setParentNode(node, nodeNew);
+
 
 	  	//Node.manualMoveByDiff(node, [100, 100])
 
 
 
-	  	bindSelect(rootNode);
-	  	bindUnselect(rootNode);
+	  	bindElement(rootNode);
+	  	bindElement(node);
+	  	bindElement(nodeTwo);
+	  	bindElement(nodeNew);
 
-	  	bindSelect(node);
-	  	bindUnselect(node);
 
+	  	Node.manualMoveByDiff(node, [500,100]);
+	  	Node.manualMoveByDiff(nodeNew, [100,10]);
+	  	Node.manualMoveByDiff(rootNode, [500,150]);
+	  	Node.manualMoveByDiff(nodeTwo, [500,200]);
 
-	  	bindSelect(nodeTwo);
-	  	bindUnselect(nodeTwo);
 
 
 		while (lastValue = yield fps(lastValue)){
@@ -114,8 +125,6 @@ $().ready(() => {
 		return result;
 	}).then(function (value) {
 	  console.log(value);
-	}, function (err) {
-	  console.error(err.stack);
 	});
 
 
