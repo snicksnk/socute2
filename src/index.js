@@ -81,7 +81,7 @@ $().ready(() => {
 	  	};
 
 	  	var newId = State.getCurrentId(state);
-	  	var node1 = $('#node-1000')[0];	
+	  	var node1 = MM.createNode(idMaker, 'MainRoot', canvas);//$('#node-1000')[0];	
 	  	var canv = $("#canvas")[0];
 
 	  	var rootNode = MM.createNode(idMaker, 'Root', canvas);
@@ -101,7 +101,7 @@ $().ready(() => {
 	  	//Node.manualMoveByDiff(node, [100, 100])
 
 
-
+	  	bindElement(node1);
 	  	bindElement(rootNode);
 	  	bindElement(node);
 	  	bindElement(nodeTwo);

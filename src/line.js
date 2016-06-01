@@ -67,23 +67,29 @@ var Line = {
 	parseD(dString){
 		var parse = /(M)\s([\-]?\d+)+\s([\-]?\d+)\s(L)\s([\-]?\d+)\s([\-]?\d+)/;
 		var d = parse.exec(dString);
-		return d.slice(1,d.length);
+		var result = [];
+		result[0] = d[2];
+		result[1] = d[3];
+		result[2] = d[5];
+		result[3] = d[6];
+
+		return result;
 	},
 
 	buildD(dArray){
-		var dString = dArray.join(' ');
+		var dString = 'M ' + dArray[0] + ' ' +  dArray[1] + ' L ' +  dArray[2] + ' ' + dArray[3]; 
 		return dString;
 	},
 
 	changeStart(dArray, diff){
-		dArray[1] = parseInt(dArray[1]) + parseInt(diff[0]);
-		dArray[2] = parseInt(dArray[2]) + parseInt(diff[1]);
+		dArray[0] = parseInt(dArray[0]) + parseInt(diff[0]);
+		dArray[1] = parseInt(dArray[1]) + parseInt(diff[1]);
 		return dArray;
 	},
 
 	changeEnd(dArray, diff){
-		dArray[4] = parseInt(dArray[4]) + parseInt(diff[0]);
-		dArray[5] = parseInt(dArray[5]) + parseInt(diff[1]);
+		dArray[2] = parseInt(dArray[2]) + parseInt(diff[0]);
+		dArray[3] = parseInt(dArray[3]) + parseInt(diff[1]);
 		return dArray;
 	},
 
