@@ -30,6 +30,20 @@ app.get("/stylesheets/print.css", function(req, res) {
   res.sendFile(__dirname + '/stylesheets/print.css ')
 });
 
+app.get("/node_modules/bootstrap/dist/js/bootstrap.js", function(req, res) {
+  res.sendFile(__dirname + '/node_modules/bootstrap/dist/js/bootstrap.js')
+});
+
+app.get("/node_modules/bootstrap/dist/css/bootstrap.css", function(req, res) {
+  res.sendFile(__dirname + '/node_modules/bootstrap/dist/css/bootstrap.css')
+});
+
+
+app.get("/images/icons/png/:icon", function(req, res) {
+  res.sendFile(__dirname + '/images/icons/png/' + req.params.icon)
+});
+
+
 
 
 

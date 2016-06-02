@@ -6,7 +6,7 @@ var MM = {
 
 	createRootNode(idMaker, text, canvas){
 		var node = Node.create(idMaker());
-		var text = Text.create(idMaker(), text);
+		var text = Text.createForeign(idMaker(), text);
 
 		canvas.appendChild(node);
 		canvas.appendChild(text);
@@ -14,20 +14,21 @@ var MM = {
 		Node.setParent
 	},
 
-	createNode(idMaker, caption, canvas){
-		
-		console.log(idMaker());
+	createNode(idMaker, caption, iconsCaption, canvas){
 	  	var node = Node.create(idMaker());
+	  	var icons = Text.create(idMaker(), iconsCaption, 'icon');
 	  	var text = Text.create(idMaker(), caption);
 
 	  	//var state = Node.bindSelect(state, node);
-
+	  	//TODO Need for getBBox()
 	  	canvas.appendChild(node);
 	  	canvas.appendChild(text);
-	  	node = Node.stretchToText(node, text);
+	  	canvas.appendChild(icons);
+
+	  	node = Node.stretchToText(node, icons, text);
 
 	  
-	  	text =Text.assignToNode(node, text);
+	  	Text.assignToNode(node, icons, text);
 	  	return node;
 	},
 

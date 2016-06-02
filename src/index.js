@@ -81,20 +81,20 @@ $().ready(() => {
 	  	};
 
 	  	var newId = State.getCurrentId(state);
-	  	var node1 = MM.createNode(idMaker, 'MainRoot', canvas);//$('#node-1000')[0];	
+	  	var node1 = MM.createNode(idMaker, 'MainRoot', 'gaaa', canvas);//$('#node-1000')[0];	
 	  	var canv = $("#canvas")[0];
 
-	  	var rootNode = MM.createNode(idMaker, 'Root', canvas);
+	  	var rootNode = MM.createNode(idMaker, 'Root', 'a', canvas);
   		MM.setParentNode(node1, rootNode);
 
-	  	var nodeTwo = MM.createNode(idMaker, 'Two', canvas);
+	  	var nodeTwo = MM.createNode(idMaker, 'Two', 'c', canvas);
 	  	MM.setParentNode(node1, nodeTwo);
 
 
-	  	var node = MM.createNode(idMaker, 'childrend', canvas);
+	  	var node = MM.createNode(idMaker, 'childrend', 'b', canvas);
 	  	MM.setParentNode(node1, node);
 
-	  	var nodeNew = MM.createNode(idMaker, 'subChildren', canvas);
+	  	var nodeNew = MM.createNode(idMaker, 'subChildren', '', canvas);
 	  	MM.setParentNode(node, nodeNew);
 
 

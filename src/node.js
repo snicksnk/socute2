@@ -76,19 +76,39 @@ var Node = {
         return childrenNode;
     },
 
+    _icons(){
 
-    stretchToText(node, text){
+    },
+
+    getTotalTextWidth(text1, text2, textN){
+    	var totalWidth = 0,
+        	totalHeight = 0;
+
+
+        for (elm of arguments) {
+        	let textBox = elm.getBBox(),
+		        textH = parseInt(textBox.height),
+		        textW = parseInt(textBox.width);
+
+	        totalHeight += textH;
+	        totalWidth  += textW; 
+        }
+
+        return [totalWidth, totalHeight];
+
+    },
+
+    stretchToText(node, icons, text){
         var leftOffset = 10
-        bottomOffset = 10,
-        textBox = text.getBBox(),
-        textH = parseInt(textBox.height),
-        textW = parseInt(textBox.width);
+        bottomOffset = 10;
+
+
+        var contentBox = Node.getTotalTextWidth(icons, text);
 
         
-        var nodeWidth = leftOffset * 2 + textW;
-        var nodeHeight = bottomOffset * 2 + textH;
+        var nodeWidth = leftOffset * 2 + contentBox[0];
+        var nodeHeight = bottomOffset * 2 + contentBox[1];
 
-        console.log(nodeWidth, nodeHeight, textW)
         setAttr(node, 'width', nodeWidth);
         setAttr(node, 'height', nodeHeight);
 
