@@ -49,10 +49,8 @@ var Text = {
             elm.setAttribute('class',  classes + ' ' + parentId + '-text' + ' ' + 'depends-' + parentId);
             elm.setAttribute('y', 200);
 
-            console.log('offse', offset);
             Text.locateToNode(parentNode, elm, offset);
-
-            offset = [textWidth, textHeight];
+            offset = [textWidth + offset[0], textHeight + offset[1]];
         }
 
     },
@@ -70,8 +68,13 @@ var Text = {
         textW = parseInt(textBox.width);
 
         text.setAttribute('x', parentX + leftOffset + diff[0]);
-        text.setAttribute('y', parentY +  (parentH / 2) + (textH / 4), diff[1]);
-
+        //HACK 
+        if (text.tagName === 'image'){
+            text.setAttribute('y', parentY +  (parentH / 2) - (textH / 2));
+        } else if (text.tagName === 'text'){
+            text.setAttribute('y', parentY +  (parentH / 2) + (textH / 4));    
+        }
+       
         return text;
     },
 

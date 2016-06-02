@@ -70,7 +70,6 @@ var Node = {
 
 
     setParent(childrenNode, parentNode){
-        console.log(parentNode)
         var childrenClass = 'depends-' + Selector.getId(parentNode);
         childrenNode = appendAttr(childrenNode, 'class', childrenClass);
         return childrenNode;
@@ -90,7 +89,7 @@ var Node = {
 		        textH = parseInt(textBox.height),
 		        textW = parseInt(textBox.width);
 
-	        totalHeight += textH;
+	        totalHeight = (totalHeight < textH)?textH:totalHeight;
 	        totalWidth  += textW; 
         }
 
@@ -98,12 +97,13 @@ var Node = {
 
     },
 
-    stretchToText(node, icons, text){
+    stretchToText(node, elm1, elm2, elmN){
         var leftOffset = 10
         bottomOffset = 10;
 
+        var elements   = Array.prototype.slice.call(arguments, 1);
 
-        var contentBox = Node.getTotalTextWidth(icons, text);
+        var contentBox = Node.getTotalTextWidth.apply(null, elements);
 
         
         var nodeWidth = leftOffset * 2 + contentBox[0];
@@ -117,5 +117,4 @@ var Node = {
 }
 
 
-console.log(Node);
 module.exports = Node;
