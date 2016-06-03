@@ -81,20 +81,19 @@ $().ready(() => {
 	  	};
 
 	  	var newId = State.getCurrentId(state);
-	  	var node1 = MM.createNode(idMaker, 'MainRoot', 'gaaa', canvas);//$('#node-1000')[0];	
+	  	var node1 = MM.createNode(idMaker, 'MainRoot', ['/images/icons/png/radar.png'], canvas);//$('#node-1000')[0];	
 	  	var canv = $("#canvas")[0];
 
-	  	var rootNode = MM.createNode(idMaker, 'Root', 'a', canvas);
+	  	var rootNode = MM.createNode(idMaker, 'Root', ['/images/icons/png/database-1.png'], canvas);
   		MM.setParentNode(node1, rootNode);
 
-	  	var nodeTwo = MM.createNode(idMaker, 'Two', 'c', canvas);
+	  	var nodeTwo = MM.createNode(idMaker, 'Two', [], canvas);
 	  	MM.setParentNode(node1, nodeTwo);
 
-
-	  	var node = MM.createNode(idMaker, 'childrend', 'b', canvas);
+	  	var node = MM.createNode(idMaker, 'childrend', [], canvas);
 	  	MM.setParentNode(node1, node);
 
-	  	var nodeNew = MM.createNode(idMaker, 'subChildren', '', canvas);
+	  	var nodeNew = MM.createNode(idMaker, 'subChildren', ['/images/icons/png/repeat-1.png', '/images/icons/png/route.png'], canvas);
 	  	MM.setParentNode(node, nodeNew);
 
 
@@ -107,9 +106,9 @@ $().ready(() => {
 	  	bindElement(nodeTwo);
 	  	bindElement(nodeNew);
 
-
-	  	Node.manualMoveByDiff(node, [500,100]);
-	  	Node.manualMoveByDiff(nodeNew, [100,10]);
+	  	Node.manualMoveByDiff(node1, [50, 50]);
+	  	Node.manualMoveByDiff(node, [500,50]);
+	  	Node.manualMoveByDiff(nodeNew, [150, 50]);
 	  	Node.manualMoveByDiff(rootNode, [500,150]);
 	  	Node.manualMoveByDiff(nodeTwo, [500,200]);
 

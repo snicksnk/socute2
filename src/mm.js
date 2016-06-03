@@ -2,6 +2,7 @@ var Node = require('./node.js');
 var Text = require('./text.js');
 var Line = require('./line.js');
 var Img = require('./image.js');
+var _   = require('underscore');
 
 var MM = {
 
@@ -15,28 +16,32 @@ var MM = {
 		Node.setParent
 	},
 
-	createNode(idMaker, caption, iconsCaption, canvas){
-	  	var node = Node.create(idMaker());
-	  	var icons = Img.create(idMaker(), '/images/icons/png/database-1.png', [10, 10]);
+	createNode(idMaker, caption, icons, canvas){
+	  	var node = Node.create(idMaker()),
+	  	  	text = Text.create(idMaker(), caption),
+	  		elements = [];
 
-	  	var icons2 = Img.create(idMaker(), '/images/icons/png/database-1.png', [10, 10]);
-	  	var icons3 = Img.create(idMaker(), '/images/icons/png/database-1.png', [10, 10]);
-	  
-	  	//var icons = Text.create(idMaker(), iconsCaption, 'icon');
-	  	var text = Text.create(idMaker(), caption);
 
-	  	//var state = Node.bindSelect(state, node);
-	  	//TODO Need for getBBox()
-	  	canvas.appendChild(node);
+  		canvas.appendChild(node);
 	  	canvas.appendChild(text);
-	  	canvas.appendChild(icons);
-	  	canvas.appendChild(icons2);
-	  	canvas.appendChild(icons3);
 
-	  	node = Node.stretchToText(node, icons, icons2,icons3, text);
 
-	  
-	  	Text.assignToNode(node, icons, icons2,icons3, text);
+
+	  	_.each(icons, icon => {
+	  		console.log(icon);
+	  		let iconImage = Img.create(idMaker(), icon, [15, 15]);
+
+		  	canvas.appendChild(iconImage);
+		  	elements.push(iconImage);
+	  	});
+
+
+	  	elements.push(text);
+	  	elements.unshift(node);
+
+  		node = Node.stretchToText.apply(null, elements);
+	  	Text.assignToNode.apply(null, elements);
+	  	
 	  	return node;
 	},
 
