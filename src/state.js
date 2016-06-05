@@ -4,6 +4,15 @@ module.exports = {
 		return state;
 	},
 
+	setActiveNode(state, node){
+		state.activeNode = node;
+		return state;
+	},
+
+	getActiveNode(state){
+		return state.activeNode;
+	},
+
 	getInitial(){
 		return {
 			_prevMouse: [0,0],
@@ -11,8 +20,13 @@ module.exports = {
 			diff: [0,0],
 			drag: false,
 			selected: null,
-			lastId: 1
+			lastId: 1,
+			activeNode: null
 		};
+	},
+
+	getSelectedNode(state){
+		return state.selected;
 	},
 
 	calculateMouseDiff(state){

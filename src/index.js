@@ -11,14 +11,37 @@ var Line = require('./line.js')
 $().ready(() => {
 	var state = State.getInitial();
 
+  	var idMaker = () => {
+  		state = State.incrementId(state);
+  		return State.getCurrentId(state);
+  	};
+
 	$('body').mousemove(event => {
 		state.mouse = [event.pageX, event.pageY];
+	});
+
+	$(document).keydown(function(e) {
+		console.log(state);
+		var canvas = $("#canvas")[0];
+		var activeNodeId = State.getActiveNode(state);
+		var activeNode = $('#' + activeNodeId)[0];
+
+
+  		if (e.keyCode == 9){
+  			var caption = prompt('entet text');
+  			var newNode = MM.createNode(idMaker, caption, [], canvas);
+  			MM.setParentNode(activeNode, newNode);
+	  		bindElement(newNode);
+  		}
 	});
 
 
 	var bindSelect = elm => $(elm).mousedown(e => {
 		var id = e.target.id;
+		$('.node').removeClass('active');
+		$('#' + id).addClass('active');
 		state = State.setSelectedNode(state, id);
+		state = State.setActiveNode(state, id);
 	});
 
 	bindSelect('.node');
@@ -72,13 +95,6 @@ $().ready(() => {
 
 	  	var lastValue = 0;
 
-	  	
-	  	console.log(state);
-
-	  	var idMaker = () => {
-	  		state = State.incrementId(state);
-	  		return State.getCurrentId(state);
-	  	};
 
 	  	var newId = State.getCurrentId(state);
 	  	var node1 = MM.createNode(idMaker, 'MainRoot', ['/images/icons/png/radar.png'], canvas);//$('#node-1000')[0];	

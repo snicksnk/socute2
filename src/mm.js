@@ -20,6 +20,7 @@ var MM = {
 	  	var node = Node.create(idMaker()),
 	  	  	text = Text.create(idMaker(), caption),
 	  		elements = [];
+	  		//helperNode = MM.createHelperNode(idMaker, node);
 
 
   		canvas.appendChild(node);
@@ -36,19 +37,44 @@ var MM = {
 	  	});
 
 
+
 	  	elements.push(text);
+	  	//elements.push(helperNode);
 	  	elements.unshift(node);
 
   		node = Node.stretchToText.apply(null, elements);
 	  	Text.assignToNode.apply(null, elements);
+
+	  	
+	  
 	  	
 	  	return node;
 	},
 
-	setParentNode(parentNode, node){
+	createHelperNode(idMaker, parentNode){
+		var node = Node.create(idMaker())
+			text = Text.create(idMaker(), '+');
+
+		canvas.appendChild(node);
+		canvas.appendChild(text);
+
+		Node.stretchToText(node, text);
+		Text.assignToNode(node, text);
+
+		//MM.setParentNode(parentNode, node, false);
+
+
+		return node;
+	},
+
+	setParentNode(parentNode, node, line = true){
 		Node.setParent(node, parentNode);
-	  	var line = Line.create(parentNode, node);
-	  	canvas.appendChild(line);
+		if (line){
+		  	var line = Line.create(parentNode, node);
+		  	canvas.appendChild(line);
+	  	} else {
+
+	  	}
 	  	return node; 
 	}
 
