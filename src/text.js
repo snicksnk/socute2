@@ -46,7 +46,7 @@ var Text = {
                 textHeight = elmBox['height'];
 
 
-            elm.setAttribute('class',  classes + ' ' + parentId + '-text' + ' ' + 'depends-' + parentId);
+            elm.setAttribute('class',  classes + ' text-' + parentId  + ' ' + 'depends-' + parentId);
             elm.setAttribute('y', 200);
 
             Text.locateToNode(parentNode, elm, offset);

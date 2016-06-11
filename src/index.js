@@ -129,6 +129,9 @@ $().ready(() => {
 	  	Node.manualMoveByDiff(nodeTwo, [500,200]);
 
 
+	  	MM.serialize();
+
+
 
 		while (lastValue = yield fps(lastValue)){
 			state = State.calculateMouseDiff(state);

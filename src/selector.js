@@ -35,9 +35,31 @@ var Selector = {
 		fullClassAttr += ' ' + value;
 		element = Selector.setAttr(element, attrName, fullClassAttr);
 		return element;
+	},
+
+	getClasses(element){
+		var classList = $(element).attr('class').split(/\s+/);
+		return classList;
+	},
+
+	getNodeSubElements(node){
+		var nodeId = Selector.getId(node);
+		return $('.depends-' + nodeId);
+	},
+
+	getDumpOfElement(element){
+		var type = $(element).prop("tagName"),
+			attrs = {};
+
+		for(let i = 0; i < element.attributes.length; i++){
+			let attr = element.attributes[i];
+			attrs[attr.name] = attr.value;
+		}
+
+		return {type, attrs, text: element.textContent};
 	}
 
-
+	
 };
 
 module.exports = Selector;

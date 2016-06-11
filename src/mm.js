@@ -3,6 +3,8 @@ var Text = require('./text.js');
 var Line = require('./line.js');
 var Img = require('./image.js');
 var _   = require('underscore');
+var $   = require('jquery');
+var Selector = require('./selector');
 
 var MM = {
 
@@ -76,6 +78,18 @@ var MM = {
 
 	  	}
 	  	return node; 
+	},
+
+	serialize(parentNode){
+		var dump = [];
+		$('#canvas').children().each((n, elm) => {
+			var classes = Selector.getClasses(elm);
+			for (cls of classes){
+				dump.push(Selector.getDumpOfElement(elm));
+			}
+		});
+
+		console.log(dump);
 	}
 
 }
