@@ -1,95 +1,79 @@
-var co = require('co');
-var $ = require('jquery');
-
-var MM   = require('./mm.js');
-var Node = require('./node.js');
-var Text = require('./text');
-var State = require('./state.js');
-var Line = require('./line.js')
+var co = require('co'),
+	$ = require('jquery'),
+	MM   = require('./mm.js'),
+	Node = require('./node.js'),
+	Text = require('./text'),
+	State = require('./state.js'),
+	Line = require('./line.js'),
+	Bacon = require('baconjs'),
+	Fps   = require('./fps.js');
 
 
 $().ready(() => {
+
+
+
 	var state = State.getInitial();
 
-  	var idMaker = () => {
+
+  	function idMaker() {
   		state = State.incrementId(state);
   		return State.getCurrentId(state);
-  	};
+  	}
 
+  	//No FRP for better perfomance
 	$('body').mousemove(event => {
 		state.mouse = [event.pageX, event.pageY];
 	});
 
-	$(document).keydown(function(e) {
-		console.log(state);
-		var canvas = $("#canvas")[0];
-		var activeNodeId = State.getActiveNode(state);
-		var activeNode = $('#' + activeNodeId)[0];
 
 
-  		if (e.keyCode == 9){
-  			var caption = prompt('entet text');
-  			var newNode = MM.createNode(idMaker, caption, [], canvas);
-  			MM.setParentNode(activeNode, newNode);
-	  		bindElement(newNode);
-  		}
-	});
+	function createNode(){
+		var canvas = $("#canvas")[0],
+			activeNodeId = State.getActiveNode(state),
+			activeNode = $('#' + activeNodeId)[0],
+			caption = prompt('entet text'),
+			newNode = MM.createNode(idMaker, caption, [], canvas);
+			
+		MM.setParentNode(activeNode, newNode);
+		bindElement(newNode);
+	}
 
+	var keyDownStrim = Bacon.fromEvent($(document), 'keydown');
 
-	var bindSelect = elm => $(elm).mousedown(e => {
-		var id = e.target.id;
+	keyDownStrim
+		.filter(e => e.keyCode == 9)
+		.onValue(createNode)
+
+	
+
+	function selectNode(node) {
+		var id = $(node).attr('id');
 		$('.node').removeClass('active');
-		$('#' + id).addClass('active');
+		$(node).addClass('active');
 		state = State.setSelectedNode(state, id);
 		state = State.setActiveNode(state, id);
-	});
+	}
 
-	bindSelect('.node');
-
-	var bindUnselect = elm => $(elm).mouseup(e => {
-		var id = e.target.id;
+	function unselectNode(){
 		state = State.unselectNode(state);
-	});
+	}
 
-	var bindElement  = (elm) => {
-		bindSelect(elm);
-		bindUnselect(elm);
-	};
-
-	bindUnselect('.node');
-
-	var frameN = 0;
-
-	var fpsDisp = $('#fps');
-	setInterval( () => {
-		fpsDisp.html('fps ' + (frameN / 2));
-		frameN = 0;
-	}, 1000);
-
-	var fps = (lastTime) => {
-		var startTime = new Date().getTime();
-		
+	var mouseDownStrim = Bacon.fromEvent($('#canvas'), 'mousedown');
+	var mouseUpStrim   = Bacon.fromEvent($('#canvas'), 'mouseup');
 
 
-		return new Promise(resolve => {
-			var minFrameTime = 30;
+	mouseDownStrim
+		.map(e => $(e.target))
+		.filter(elm => elm.hasClass('node'))
+		.onValue(elm => selectNode(elm));
 
-			var currentTime = new Date().getTime();
-			var timeFromLastFrame = currentTime - lastTime;
+	mouseUpStrim.onValue(unselectNode);
 
-			
-			var delayTime = minFrameTime - timeFromLastFrame;
+	var fpsCont = $('#fps');
 
-			if (delayTime < 0){
-				delayTime = 0;
-			}
+	var fps = Fps(rate => fpsCont.html('FPS ' + rate));
 
-			frameN++; 
-
-
-			setTimeout(() => {resolve(currentTime);}, delayTime);
-		})}
-	;
 
 	co(function * () {
 
@@ -114,13 +98,6 @@ $().ready(() => {
 
 
 	  	//Node.manualMoveByDiff(node, [100, 100])
-
-
-	  	bindElement(node1);
-	  	bindElement(rootNode);
-	  	bindElement(node);
-	  	bindElement(nodeTwo);
-	  	bindElement(nodeNew);
 
 	  	Node.manualMoveByDiff(node1, [50, 50]);
 	  	Node.manualMoveByDiff(node, [500,50]);
