@@ -34,7 +34,7 @@ $().ready(() => {
 			activeNode = $('#' + activeNodeId)[0],
 			caption = prompt('entet text'),
 			newNode = MM.createNode(idMaker, caption, [], canvas);
-			
+
 		MM.setParentNode(activeNode, newNode);
 		bindElement(newNode);
 	}
@@ -80,21 +80,23 @@ $().ready(() => {
 	  	var lastValue = 0;
 
 
+
+	  	mm = MM.factory(idMaker, canvas);
+
 	  	var newId = State.getCurrentId(state);
-	  	var node1 = MM.createNode(idMaker, 'MainRoot', ['/images/icons/png/radar.png'], canvas);//$('#node-1000')[0];	
+	  	var node1 = mm.createNode('MainRoot', ['/images/icons/png/radar.png']);//$('#node-1000')[0];	
 	  	var canv = $("#canvas")[0];
 
-	  	var rootNode = MM.createNode(idMaker, 'Root', ['/images/icons/png/database-1.png'], canvas);
-  		MM.setParentNode(node1, rootNode);
+	  	var rootNode = mm.createNode('Root', ['/images/icons/png/database-1.png'], node1);
+  	
 
-	  	var nodeTwo = MM.createNode(idMaker, 'Two', [], canvas);
-	  	MM.setParentNode(node1, nodeTwo);
+	  	var nodeTwo = mm.createNode('Two', [], node1);
+	  	
 
-	  	var node = MM.createNode(idMaker, 'childrend', [], canvas);
-	  	MM.setParentNode(node1, node);
+	  	var node = mm.createNode('childrend', [], node1);
 
-	  	var nodeNew = MM.createNode(idMaker, 'subChildren', ['/images/icons/png/repeat-1.png', '/images/icons/png/route.png'], canvas);
-	  	MM.setParentNode(node, nodeNew);
+	  	var nodeNew = mm.createNode('subChildren', ['/images/icons/png/repeat-1.png', '/images/icons/png/route.png'], node);
+	
 
 
 	  	//Node.manualMoveByDiff(node, [100, 100])
@@ -106,7 +108,7 @@ $().ready(() => {
 	  	Node.manualMoveByDiff(nodeTwo, [500,200]);
 
 
-	  	MM.serialize();
+	  	//MM.serialize();
 
 
 

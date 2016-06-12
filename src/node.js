@@ -4,6 +4,7 @@ var Selector = require('./selector');
 var attr = Selector.attr;
 var setAttr = Selector.setAttr;
 var appendAttr = Selector.appendAttr;
+var Geom  = require('./geom');
 
 
 var Node = {
@@ -97,7 +98,40 @@ var Node = {
 
     },
 
+     assignSubElements(parentNode, wrp1, wrp2, wrpN){
+        var wrapers = Array.prototype.slice.call(arguments, 1),
+            parentId = Selector.getId(parentNode),
+            offset = [0, 0],
+            elements = [];
+
+            console.log(wrapers);
+
+        for (let wrap of wrapers){
+            elements = wrap(parentNode, elements);
+        }
+
+        return elements;
+    },
+
     stretchToText(node, elm1, elm2, elmN){
+        var leftOffset = 10,
+            bottomOffset = 10;
+            elements   = Array.prototype.slice.call(arguments, 1);
+            //contentBox = Node.getTotalTextWidth.apply(null, elements);
+
+            console.log(node)
+            var box = (Geom.makeRectangle(elements)); 
+            console.log(box);
+
+            setAttr(node, 'width', box['width']);
+            setAttr(node, 'height', box['height']);
+
+
+
+            return node;
+    },
+
+    __stretchToText_(node, elm1, elm2, elmN){
         var leftOffset = 10
         bottomOffset = 10;
 

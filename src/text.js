@@ -1,4 +1,5 @@
 var Selector = require('./selector');
+var Img     = require('./image');
 var attr = Selector.attr;
 
 var Text = {
@@ -34,7 +35,8 @@ var Text = {
 
     },
 
-    assignToNode(parentNode, elm1, elm2, elmN){
+
+    _assignToNode(parentNode, elm1, elm2, elmN){
 		var elements = Array.prototype.slice.call(arguments, 1),
             parentId = Selector.getId(parentNode),
             offset = [0, 0];
@@ -53,6 +55,17 @@ var Text = {
             offset = [textWidth + offset[0], textHeight + offset[1]];
         }
 
+    },
+
+    locateText(text){
+        return function(parentNode, items){
+            var textBox = text.getBBox(),
+                textH = parseInt(textBox.height),
+                textW = parseInt(textBox.width);
+            var items = Img.locateIcon(text)(parentNode, items);
+            Selector.setAttr(text, 'y', attr(text, 'y') + textH / 2)
+            return items;
+        }
     },
 
     locateToNode(parentNode, text, diff){
